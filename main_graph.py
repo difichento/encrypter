@@ -2,7 +2,7 @@ from caesar import Caesar
 from vigenere import Vigenere
 from vernam import Vernam
 from picture import Picture
-from global_var import window
+from window import window
 
 if __name__ == '__main__':
     cas = Caesar()

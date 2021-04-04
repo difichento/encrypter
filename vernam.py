@@ -2,7 +2,7 @@ from global_var import alphabet_upper
 import random
 from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Entry
 from tkinter import messagebox
-from global_var import vern
+from window import vern
 
 
 def vernam_encrypt(source_file_way, result_file_way, result_key_file_way, seed):

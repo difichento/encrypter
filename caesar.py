@@ -2,7 +2,7 @@ from global_var import alphabet_lower
 from global_var import alphabet_upper
 from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Spinbox
 from tkinter import messagebox
-from global_var import caes
+from window import caes
 
 
 def encrypt_caes_line(line, shift):
