@@ -43,7 +43,8 @@
 <p><img src="https://d.radikal.ru/d25/2104/20/22ccacdaccf2.png" alt="скрин"></p></li>
   </details>
 <li><details><summary>Шифр Вернама</summary>
-Работает почти как шифр Виженера, но генерирует случайный ключ (из сида) такой же по длинне как и шифруемый текст
+ Как работает: <a href="https://ru.wikipedia.org/wiki/%D0%A8%D0%B8%D1%84%D1%80_%D0%92%D0%B5%D1%80%D0%BD%D0%B0%D0%BC%D0%B0">ссылка</a>
+<p>Работает почти как шифр Виженера, но генерирует случайный ключ (из сида) такой же по длинне как и шифруемый текст</p>
   <p><img src="https://c.radikal.ru/c02/2104/2c/e60918e1d4ed.png" alt="скрин"></p></li>
 </details>
 <li><details><summary>Шифрование в картинку</summary>
