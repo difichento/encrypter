@@ -2,14 +2,12 @@ import numpy as np
 import random
 from tkinter import Button, Entry, filedialog, IntVar, Label, Radiobutton, StringVar
 from tkinter import messagebox
-<<<<<<< HEAD
 
 from PIL import Image
 
 from global_var import pict
-=======
+
 from window import pict
->>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
 
 
 def picture_encrypt(source_picture_way, source_text_file_way, result_picture_way, seed):
