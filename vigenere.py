@@ -1,7 +1,6 @@
-from global_var import alphabet_upper
-from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Entry, StringVar
-from tkinter import messagebox
-from global_var import vig
+from tkinter import Button, Entry, filedialog, IntVar, Label, messagebox, Radiobutton, StringVar
+
+from global_var import alphabet_upper, alph_len, vig
 
 
 def vigenere_encrypt(source_file_way, result_file_way, key_word):
@@ -14,14 +13,14 @@ def vigenere_encrypt(source_file_way, result_file_way, key_word):
     :return: Ничего не возвращает, но запысывает зашифрованный текст в result_file
     """
     result = ""
-    source_file = open(source_file_way, "r")
+    with open(source_file_way, "r") as source_file:
 
-    new_text = ""
-    # preparing file
-    for line in source_file.readlines():
-        for i in line.upper():
-            if i in alphabet_upper:
-                new_text += i
+        new_text = ""
+        # preparing file
+        for line in source_file.readlines():
+            for i in line.upper():
+                if i in alphabet_upper:
+                    new_text += i
 
     # preparing keyword
     tmp = ""
@@ -32,13 +31,12 @@ def vigenere_encrypt(source_file_way, result_file_way, key_word):
 
     # encrypting
     for i in range(len(new_text)):
-        result += alphabet_upper[alphabet_upper.find(new_text[i]) + alphabet_upper.find(key_word[i % len(key_word)])]
+        result += alphabet_upper[
+            (alphabet_upper.find(new_text[i]) + alphabet_upper.find(key_word[i % len(key_word)])) % alph_len]
 
     # writing result
-    result_file = open(result_file_way, "w")
-    result_file.write(result)
-    source_file.close()
-    result_file.close()
+    with open(result_file_way, "w") as result_file:
+        result_file.write(result)
 
 
 def vigenere_encrypt_int():
@@ -62,14 +60,13 @@ def vigenere_decrypt(source_file_way, result_file_way, key_word):
     :return: Ничего не возвращает, но запысывает расшифрованный текст в result_file
     """
     result = ""
-    source_file = open(source_file_way, "r")
-
-    new_text = ""
-    # preparing file
-    for line in source_file.readlines():
-        for i in line.upper():
-            if i in alphabet_upper:
-                new_text += i
+    with open(source_file_way, "r") as source_file:
+        new_text = ""
+        # preparing file
+        for line in source_file.readlines():
+            for i in line.upper():
+                if i in alphabet_upper:
+                    new_text += i
 
     # preparing keyword
     tmp = ""
@@ -80,13 +77,12 @@ def vigenere_decrypt(source_file_way, result_file_way, key_word):
 
     # encrypting
     for i in range(len(new_text)):
-        result += alphabet_upper[alphabet_upper.find(new_text[i]) - alphabet_upper.find(key_word[i % len(key_word)])]
+        result += alphabet_upper[
+            (alphabet_upper.find(new_text[i]) - alphabet_upper.find(key_word[i % len(key_word)])) % alph_len]
 
     # writing result
-    result_file = open(result_file_way, "w")
-    result_file.write(result)
-    source_file.close()
-    result_file.close()
+    with open(result_file_way, "w") as result_file:
+        result_file.write(result)
 
 
 def vigenere_decrypt_int():
@@ -104,6 +100,7 @@ class Vigenere:
     """
     Класс для отрисовки вкладки "Шифр Виженера" в графическом интерфейсе
     """
+
     def __init__(self):
         self.source_file = None
         self.result_file = None
@@ -145,17 +142,17 @@ class Vigenere:
 
     def show(self):
         description = Label(vig,
-                                text="Шифр Виженера осуществляется суммой индексов буквы и ключа."
-                                     "\nВсе символы как в ключе, так и в исходном тексте, кроме букв будут удалены,"
-                                     " \nвсе буквы будут переведены в верхний регистр",
-                                padx=0, pady=20)
+                            text="Шифр Виженера осуществляется суммой индексов буквы и ключа."
+                                 "\nВсе символы как в ключе, так и в исходном тексте, кроме букв будут удалены,"
+                                 " \nвсе буквы будут переведены в верхний регистр",
+                            padx=0, pady=20)
         description.grid(column=0, row=0)
 
         choose_file = Button(vig, text="Выберите файл который хотите зашифровать/расшифровать",
-                                 command=self.select_source)
+                             command=self.select_source)
         choose_file.grid(column=0, row=1)
         choose_file = Button(vig, text="Выберите куда сохранить результат",
-                                 command=self.select_result)
+                             command=self.select_result)
         choose_file.grid(column=0, row=2)
 
         self.selected_type = IntVar()
