@@ -1,7 +1,6 @@
+from tkinter import Tk
+from tkinter import ttk
 
-alphabet_lower = "abcdefghijklmnopqrstuvwxyz"
-alphabet_upper = alphabet_lower.upper()
-alph_len = len(alphabet_upper)
 
 # инициализация окна
 window = Tk()
@@ -19,4 +18,4 @@ tab_control.add(vig, text='Шифр Виженера')
 tab_control.add(vern, text='Шифр Вернама')
 tab_control.add(pict, text='Шифрование в картинку')
 tab_control.pack(expand=1, fill='both')
-
+tab_control.pack(expand=1, fill='both')

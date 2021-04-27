@@ -3,9 +3,13 @@ import random
 from tkinter import Button, Entry, filedialog, IntVar, Label, Radiobutton, StringVar
 from tkinter import messagebox
 
+
 from PIL import Image
 
 from global_var import pict
+
+from window import pict
+
 
 
 def picture_encrypt(source_picture_way, source_text_file_way, result_picture_way, seed):

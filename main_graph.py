@@ -4,6 +4,10 @@ from picture import Picture
 from vigenere import Vigenere
 from vernam import Vernam
 
+from picture import Picture
+from window import window
+
+
 if __name__ == '__main__':
     cas = Caesar()
     vigen = Vigenere()
