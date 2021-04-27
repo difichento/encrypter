@@ -1,7 +1,13 @@
 import random
+<<<<<<< HEAD
 from tkinter import Button, Entry, filedialog, IntVar, Label, messagebox, Radiobutton
 
 from global_var import alphabet_upper, alph_len, vern
+=======
+from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Entry
+from tkinter import messagebox
+from window import vern
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
 
 
 def vernam_encrypt(source_file_way, result_file_way, result_key_file_way, seed):
@@ -35,10 +41,17 @@ def vernam_encrypt(source_file_way, result_file_way, result_key_file_way, seed):
                 tmp += alphabet_upper[random.randint(0, alph_len - 1)]
             keyword = tmp
 
+<<<<<<< HEAD
             for letter, key_letter in zip(line, keyword):
                 found_letter = alphabet_upper.find(letter)
                 found_key_letter = alphabet_upper.find(key_letter)
                 result += alphabet_upper[(found_letter + found_key_letter) % alph_len]
+=======
+        for let, klet in zip(line, keyword):
+            found_let = alphabet_upper.find(let)
+            found_key_let = alphabet_upper.find(klet)
+            result += alphabet_upper[(found_let + found_key_let) % len(alphabet_upper)]
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
 
             result_key += keyword
 
@@ -71,6 +84,7 @@ def vernam_decrypt(source_file_way, result_file_way, key_file_way):
     :return: Ничего не возвращает, но записывает результат расшифровки в result_file
     """
     result = ""
+<<<<<<< HEAD
     with open(source_file_way, "r") as source_file, open(key_file_way, "r") as key_file:
         # encrypting file
         for letter, key_letter in zip(source_file.read(), key_file.read()):
@@ -81,6 +95,23 @@ def vernam_decrypt(source_file_way, result_file_way, key_file_way):
     with open(result_file_way, "w") as result_file:
         # writing result
         result_file.write(result)
+=======
+    source_file = open(source_file_way, "r")
+    key_file = open(key_file_way, "r")
+
+    # encrypting file
+    for let, klet in zip(source_file.read(), key_file.read()):
+        found_let = alphabet_upper.find(let)
+        found_key_let = alphabet_upper.find(klet)
+        result += alphabet_upper[(found_let - found_key_let) % len(alphabet_upper)]
+
+    # writing result
+    result_file = open(result_file_way, "w")
+    result_file.write(result)
+    source_file.close()
+    result_file.close()
+    key_file.close()
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
 
 
 def vernam_decrypt_int():

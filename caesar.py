@@ -1,8 +1,12 @@
 from tkinter import Button, filedialog, IntVar, Label, Radiobutton, Spinbox
 from tkinter import messagebox
+<<<<<<< HEAD
 
 from global_var import alphabet_lower, alphabet_upper, alph_len
 from global_var import caes
+=======
+from window import caes
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
 
 
 def encrypt_caes_line(line, shift):
@@ -17,13 +21,21 @@ def encrypt_caes_line(line, shift):
         find_res = alphabet_lower.find(letter)
         if find_res != -1:
             find_res += shift
+<<<<<<< HEAD
             find_res %= alph_len
+=======
+            find_res %= len(alphabet_upper)
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
             result += alphabet_lower[find_res]
         else:
             find_res = alphabet_upper.find(letter)
             if find_res != -1:
                 find_res += shift
+<<<<<<< HEAD
                 find_res %= alph_len
+=======
+                find_res %= len(alphabet_upper)
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
                 result += alphabet_upper[find_res]
             else:
                 result += letter
@@ -73,13 +85,21 @@ def decrypt_caes_line(line, shift):
         find_res = alphabet_lower.find(letter)
         if find_res != -1:
             find_res -= shift
+<<<<<<< HEAD
             find_res %= alph_len
+=======
+            find_res %= len(alphabet_upper)
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
             result += alphabet_lower[find_res]
         else:
             find_res = alphabet_upper.find(letter)
             if find_res != -1:
                 find_res -= shift
+<<<<<<< HEAD
                 find_res %= alph_len
+=======
+                find_res %= len(alphabet_upper)
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
                 result += alphabet_upper[find_res]
             else:
                 result += letter
@@ -141,7 +161,11 @@ def caesar_auto_crack(source_file_way, result_file_way):
     counter = list(map(lambda x: [x[0], x[1] / letter_sum], counter))
     shift = alphabet_lower.find(counter[0][0]) - alphabet_lower.find("e")
     if shift < 0:
+<<<<<<< HEAD
         shift = alph_len + shift
+=======
+        shift = len(alphabet_upper) + shift
+>>>>>>> da2fa4dd70c943c684f5e805a708e99e2772c3fb
 
     caesar_decrypt(source_file_way, result_file_way, shift)
 
