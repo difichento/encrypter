@@ -1,8 +1,7 @@
-from global_var import alphabet_upper
 import random
-from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Entry
-from tkinter import messagebox
-from global_var import vern
+from tkinter import Button, Entry, filedialog, IntVar, Label, messagebox, Radiobutton
+
+from global_var import alphabet_upper, alph_len, vern
 
 
 def vernam_encrypt(source_file_way, result_file_way, result_key_file_way, seed):
@@ -18,39 +17,37 @@ def vernam_encrypt(source_file_way, result_file_way, result_key_file_way, seed):
     """
     result = ""
     result_key = ""
-    source_file = open(source_file_way, "r")
 
     random.seed(seed)
+    with open(source_file_way, "r") as source_file:
+        # encrypting file
+        for line in source_file:
+            # preparing keyword
+            new_line = ""
 
-    # encrypting file
-    for line in source_file:
-        # preparing keyword
-        new_line = ""
+            for i in line.upper():
+                if i in alphabet_upper:
+                    new_line += i
+            line = new_line
 
-        for i in line.upper():
-            if i in alphabet_upper:
-                new_line += i
-        line = new_line
+            tmp = ""
+            for i in range(len(line)):
+                tmp += alphabet_upper[random.randint(0, alph_len - 1)]
+            keyword = tmp
 
-        tmp = ""
-        for i in range(len(line)):
-            tmp += alphabet_upper[random.randint(0, 25)]
-        keyword = tmp
+            for letter, key_letter in zip(line, keyword):
+                found_letter = alphabet_upper.find(letter)
+                found_key_letter = alphabet_upper.find(key_letter)
+                result += alphabet_upper[(found_letter + found_key_letter) % alph_len]
 
-        for let, klet in zip(line, keyword):
-            found_let = alphabet_upper.find(let)
-            found_key_let = alphabet_upper.find(klet)
-            result += alphabet_upper[(found_let + found_key_let) % 26]
+            result_key += keyword
 
-        result_key += keyword
-
-    # writing result
-    source_file = open(result_file_way, "w")
-    source_file.write(result)
-    source_file.close()
-    result_key_file = open(result_key_file_way, "w")
-    result_key_file.write(result_key)
-    result_key_file.close()
+    with open(result_file_way, "w") as result_file:
+        # writing result
+        result_file.write(result)
+    with open(result_key_file_way, "w") as result_key_file:
+        # writing result
+        result_key_file.write(result_key)
 
 
 def vernam_encrypt_int():
@@ -74,21 +71,16 @@ def vernam_decrypt(source_file_way, result_file_way, key_file_way):
     :return: Ничего не возвращает, но записывает результат расшифровки в result_file
     """
     result = ""
-    source_file = open(source_file_way, "r")
-    key_file = open(key_file_way, "r")
+    with open(source_file_way, "r") as source_file, open(key_file_way, "r") as key_file:
+        # encrypting file
+        for letter, key_letter in zip(source_file.read(), key_file.read()):
+            found_letter = alphabet_upper.find(letter)
+            found_key_letter = alphabet_upper.find(key_letter)
+            result += alphabet_upper[(found_letter - found_key_letter) % alph_len]
 
-    # encrypting file
-    for let, klet in zip(source_file.read(), key_file.read()):
-        found_let = alphabet_upper.find(let)
-        found_key_let = alphabet_upper.find(klet)
-        result += alphabet_upper[(found_let - found_key_let) % 26]
-
-    # writing result
-    result_file = open(result_file_way, "w")
-    result_file.write(result)
-    source_file.close()
-    result_file.close()
-    key_file.close()
+    with open(result_file_way, "w") as result_file:
+        # writing result
+        result_file.write(result)
 
 
 def vernam_decrypt_int():

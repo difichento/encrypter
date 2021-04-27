@@ -3,6 +3,7 @@ from tkinter import ttk
 
 alphabet_lower = "abcdefghijklmnopqrstuvwxyz"
 alphabet_upper = alphabet_lower.upper()
+alph_len = len(alphabet_upper)
 
 # инициализация окна
 window = Tk()
