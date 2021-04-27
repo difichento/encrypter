@@ -1,7 +1,7 @@
-from caesar import *
-from vigenere import *
-from vernam import *
-from picture import *
+from caesar import caesar_encrypt_int, caesar_decrypt_int, caesar_auto_crack_int
+from vigenere import vigenere_encrypt_int, vigenere_decrypt_int
+from vernam import vernam_encrypt_int, vernam_decrypt_int
+from picture import picture_encrypt_int, picture_decrypt_int
 
 
 def hello():

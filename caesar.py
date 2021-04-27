@@ -2,7 +2,7 @@ from global_var import alphabet_lower
 from global_var import alphabet_upper
 from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Spinbox
 from tkinter import messagebox
-from global_var import caes
+from window import caes
 
 
 def encrypt_caes_line(line, shift):
@@ -17,13 +17,13 @@ def encrypt_caes_line(line, shift):
         find_res = alphabet_lower.find(let)
         if find_res != -1:
             find_res += shift
-            find_res %= 26
+            find_res %= len(alphabet_upper)
             result += alphabet_lower[find_res]
         else:
             find_res = alphabet_upper.find(let)
             if find_res != -1:
                 find_res += shift
-                find_res %= 26
+                find_res %= len(alphabet_upper)
                 result += alphabet_upper[find_res]
             else:
                 result += let
@@ -76,13 +76,13 @@ def decrypt_caes_line(line, shift):
         find_res = alphabet_lower.find(let)
         if find_res != -1:
             find_res -= shift
-            find_res %= 26
+            find_res %= len(alphabet_upper)
             result += alphabet_lower[find_res]
         else:
             find_res = alphabet_upper.find(let)
             if find_res != -1:
                 find_res -= shift
-                find_res %= 26
+                find_res %= len(alphabet_upper)
                 result += alphabet_upper[find_res]
             else:
                 result += let
@@ -147,7 +147,7 @@ def caesar_auto_crack(source_file_way, result_file_way):
     counter = list(map(lambda x: [x[0], x[1] / let_sum], counter))
     shift = alphabet_lower.find(counter[0][0]) - alphabet_lower.find("e")
     if shift < 0:
-        shift = 26 + shift
+        shift = len(alphabet_upper) + shift
 
     caesar_decrypt(source_file_way, result_file_way, shift)
 

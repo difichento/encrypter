@@ -1,7 +1,7 @@
 from global_var import alphabet_upper
 from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Entry, StringVar
 from tkinter import messagebox
-from global_var import vig
+from window import vig
 
 
 def vigenere_encrypt(source_file_way, result_file_way, key_word):
