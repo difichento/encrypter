@@ -5,7 +5,7 @@
 </blockquote>
 <h1 id="-">Гайд по запуску</h1>
 <h3 id="-python-"><strong>Первый этап: установка python и нужные библиотеки</strong></h3>
-<h5 id="-python3-pygame-">Если у вас уже установлен python3 и вы можете самостоятельно установить библиотеку pygame — пропустите этот этап</h5>
+<h5 id="-python3-pygame-">Если у вас уже установлен python3 — пропустите этот этап</h5>
 <p><strong>1. Скачайте python3 с официального <a href="https://www.python.org/downloads/">сайта</a> и установите его.</strong> 
 <strong>2. Во время установки <em>обязательно</em> поставьте галочку "Add Python 3.x to PATH".</strong></p> <p><img src="https://python-scripts.com/wp-content/uploads/2018/06/win-install-dialog.40e3ded144b0.png" alt="add path screenshot"></p>
 <p><strong>3. Запустите консоль Windows любым удобным для вас способом (например набрав в поиске приложений cmd)</strong></p>
