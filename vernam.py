@@ -1,13 +1,10 @@
 import random
 
-from tkinter import Button, Entry, filedialog, IntVar, Label, messagebox, Radiobutton
-
-from global_var import alphabet_upper, alph_len, vern
+from global_var import alphabet_upper, alph_len
 
 from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Entry
 from tkinter import messagebox
 from window import vern
-
 
 
 def vernam_encrypt(source_file_way, result_file_way, result_key_file_way, seed):
@@ -41,7 +38,6 @@ def vernam_encrypt(source_file_way, result_file_way, result_key_file_way, seed):
                 tmp += alphabet_upper[random.randint(0, alph_len - 1)]
             keyword = tmp
 
-
             for letter, key_letter in zip(line, keyword):
                 found_letter = alphabet_upper.find(letter)
                 found_key_letter = alphabet_upper.find(key_letter)
@@ -51,7 +47,6 @@ def vernam_encrypt(source_file_way, result_file_way, result_key_file_way, seed):
             found_let = alphabet_upper.find(let)
             found_key_let = alphabet_upper.find(klet)
             result += alphabet_upper[(found_let + found_key_let) % len(alphabet_upper)]
-
 
             result_key += keyword
 
@@ -111,7 +106,6 @@ def vernam_decrypt(source_file_way, result_file_way, key_file_way):
     source_file.close()
     result_file.close()
     key_file.close()
-
 
 
 def vernam_decrypt_int():

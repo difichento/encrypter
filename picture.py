@@ -5,8 +5,6 @@ from tkinter import messagebox
 
 from PIL import Image
 
-from global_var import pict
-
 from window import pict
 
 

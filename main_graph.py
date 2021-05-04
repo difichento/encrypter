@@ -1,6 +1,4 @@
 from caesar import Caesar
-from global_var import window
-from picture import Picture
 from vigenere import Vigenere
 from vernam import Vernam
 

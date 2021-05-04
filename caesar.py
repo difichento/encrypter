@@ -1,12 +1,9 @@
 from tkinter import Button, filedialog, IntVar, Label, Radiobutton, Spinbox
 from tkinter import messagebox
 
-
 from global_var import alphabet_lower, alphabet_upper, alph_len
-from global_var import caes
 
 from window import caes
-
 
 
 def encrypt_caes_line(line, shift):
