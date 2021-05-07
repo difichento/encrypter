@@ -1,9 +1,22 @@
 from tkinter import Button, filedialog, IntVar, Label, Radiobutton, Spinbox
 from tkinter import messagebox
 
-from global_var import alphabet_lower, alphabet_upper, alph_len
+from global_var import alphabet_lower, alphabet_lower_ru, alphabet_upper, alphabet_upper_ru, alph_len, alph_len_ru
 
 from window import caes
+
+
+def find_letter(letter):
+    """
+    Получает на вход букву, ищет ее в алфавитах, если нашла - возвращает список с ее порядковым номером и алфавитом
+    если буква не нашлась, возвращает -1
+    """
+    alphs = [alphabet_upper_ru, alphabet_lower_ru, alphabet_upper, alphabet_lower]
+    for alph in alphs:
+        n = alph.find(letter)
+        if n != -1:
+            return [n, alph]
+    return -1
 
 
 def encrypt_caes_line(line, shift):
@@ -15,27 +28,11 @@ def encrypt_caes_line(line, shift):
     """
     result = ""
     for letter in line:
-        find_res = alphabet_lower.find(letter)
+        find_res = find_letter(letter)
         if find_res != -1:
-            find_res += shift
-
-            find_res %= alph_len
-
-            find_res %= len(alphabet_upper)
-
-            result += alphabet_lower[find_res]
+            result += find_res[1][(find_res[0] + shift) % len(find_res[1])]
         else:
-            find_res = alphabet_upper.find(letter)
-            if find_res != -1:
-                find_res += shift
-
-                find_res %= alph_len
-
-                find_res %= len(alphabet_upper)
-
-                result += alphabet_upper[find_res]
-            else:
-                result += letter
+            result += letter
     return result
 
 
@@ -47,6 +44,7 @@ def caesar_encrypt(source_file_way, result_file_way, shift):
     :param shift: Сдвиг
     :return: Ничего не возвращает, но записывает зашифрованный текст в result_file
     """
+    print(source_file_way, result_file_way, shift)
     result = ""
     with open(source_file_way, "r") as source_file:
         # encrypting file
@@ -79,27 +77,11 @@ def decrypt_caes_line(line, shift):
 
     result = ""
     for letter in line:
-        find_res = alphabet_lower.find(letter)
+        find_res = find_letter(letter)
         if find_res != -1:
-            find_res -= shift
-
-            find_res %= alph_len
-
-            find_res %= len(alphabet_upper)
-
-            result += alphabet_lower[find_res]
+            result += find_res[1][(find_res[0] - shift) % len(find_res[1])]
         else:
-            find_res = alphabet_upper.find(letter)
-            if find_res != -1:
-                find_res -= shift
-
-                find_res %= alph_len
-
-                find_res %= len(alphabet_upper)
-
-                result += alphabet_upper[find_res]
-            else:
-                result += letter
+            result += letter
     return result
 
 
