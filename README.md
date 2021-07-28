@@ -54,7 +54,7 @@
 <h2 id="-">Несколько примеров работы шифратора</h2>
 <p><strong>Шифр вернама</strong></p>
 <p><img src="https://b.radikal.ru/b40/2104/04/476c2d9bac82.png" alt=""></p>
-<p><strong>Шифрование в картинку</strong>
-<img src="https://d.radikal.ru/d00/2104/63/099a405c47aa.png" alt=""></p>
+<p><strong>Шифрование в картинку</strong></p>
+<p><img src="https://d.radikal.ru/d00/2104/63/099a405c47aa.png" alt=""></p>
 <p><img src="https://a.radikal.ru/a07/2104/d0/8d66912e2de5.png" alt=""></p>
 <p><img src="https://d.radikal.ru/d43/2104/a2/a74f4656723f.png" alt=""></p>
