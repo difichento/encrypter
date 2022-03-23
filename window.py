@@ -1,7 +1,6 @@
 from tkinter import Tk
 from tkinter import ttk
 
-
 # инициализация окна
 window = Tk()
 window.title("МЕГА ШИФРАТОР-2999")

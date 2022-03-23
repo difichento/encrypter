@@ -1,8 +1,10 @@
 import numpy as np
-from PIL import Image
 import random
-from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Entry, StringVar
+from tkinter import Button, Entry, filedialog, IntVar, Label, Radiobutton, StringVar
 from tkinter import messagebox
+
+from PIL import Image
+
 from window import pict
 
 
@@ -21,7 +23,6 @@ def picture_encrypt(source_picture_way, source_text_file_way, result_picture_way
     # загрузка файлов и инициализация некоторых переменных
     used_pixel_list = []
 
-    source_text_file = open(source_text_file_way, "r")
     source_img = Image.open(source_picture_way)
     source_img.load()
     source_array = np.array(source_img)
@@ -31,26 +32,28 @@ def picture_encrypt(source_picture_way, source_text_file_way, result_picture_way
     current_pixel = random.randint(0, source_height * source_width)
 
     # основной цикл в котором шифруется текст
-    for line in source_text_file.readlines():
-        for let in line:
-            while current_pixel in used_pixel_list:
-                current_pixel = random.randint(0, source_height * source_width)
-            pixel_line = current_pixel // source_width
-            pixel_collumn = current_pixel % source_width
-            let = ord(let)
+    with open(source_text_file_way, "r") as source_text_file:
+        for line in source_text_file.readlines():
+            for let in line:
+                while current_pixel in used_pixel_list:
+                    current_pixel = random.randint(0, source_height * source_width)
+                pixel_line = current_pixel // source_width
+                pixel_collumn = current_pixel % source_width
+                let = ord(let)
 
-            let_r = (let & 0b11100000) >> 5
-            let_g = (let & 0b00011100) >> 2
-            let_b = let & 0b00000011
-            source_array[pixel_line][pixel_collumn][0] = (source_array[pixel_line][pixel_collumn][
-                                                              0] & 0b11111000) + let_r
-            source_array[pixel_line][pixel_collumn][1] = (source_array[pixel_line][pixel_collumn][
-                                                              1] & 0b11111000) + let_g
-            source_array[pixel_line][pixel_collumn][2] = (source_array[pixel_line][pixel_collumn][
-                                                              2] & 0b11111100) + let_b
-            used_pixel_list.append(current_pixel)
+                let_r = (let & 0b11100000) >> 5
+                let_g = (let & 0b00011100) >> 2
+                let_b = let & 0b00000011
+                source_array[pixel_line][pixel_collumn][0] = (source_array[pixel_line][pixel_collumn][
+                                                                  0] & 0b11111000) + let_r
+                source_array[pixel_line][pixel_collumn][1] = (source_array[pixel_line][pixel_collumn][
+                                                                  1] & 0b11111000) + let_g
+                source_array[pixel_line][pixel_collumn][2] = (source_array[pixel_line][pixel_collumn][
+                                                                  2] & 0b11111100) + let_b
+                used_pixel_list.append(current_pixel)
 
     # зашифровываем 0 чтобы оозначить конец последовательности
+    # в source_array[pixel_line][pixel_collumn][x]: x = 0, 1, 2 - red, green, blue значения соответственно
     while current_pixel in used_pixel_list:
         current_pixel = random.randint(0, source_height * source_width)
     pixel_line = current_pixel // source_width
@@ -62,7 +65,6 @@ def picture_encrypt(source_picture_way, source_text_file_way, result_picture_way
     # сохранение результата
     res = Image.fromarray(source_array, "RGB")
     res.save(result_picture_way)
-    source_text_file.close()
 
 
 def picture_encrypt_int():
@@ -102,7 +104,6 @@ def picture_decrypt(source_picture_way, result_text_file_way, seed):
     # загрузка файлов и инициализация некоторых переменных
     used_pixel_list = []
 
-    result_file = open(result_text_file_way, "w")
     source_img = Image.open(source_picture_way)
     source_img.load()
     source_array = np.array(source_img)
@@ -125,8 +126,8 @@ def picture_decrypt(source_picture_way, result_text_file_way, seed):
         else:
             result += chr(tmp)
 
-    result_file.write(result)
-    result_file.close()
+    with open(result_text_file_way, "w") as result_file:
+        result_file.write(result)
 
 
 def picture_decrypt_int():

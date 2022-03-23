@@ -4,7 +4,7 @@ from vernam import vernam_encrypt_int, vernam_decrypt_int
 from picture import picture_encrypt_int, picture_decrypt_int
 
 
-def hello():
+def welcome_function():
     print("Hi, I'm encryptor, that's what I can do:")
 
 
@@ -12,10 +12,10 @@ def quit_program():
     quit()
 
 
-def print_menu(menu_options):
+def print_menu(option_list):
     print("Available features:")
-    for key in menu_options:
-        print(key, ": ", menu_options[key]["text"], sep="")
+    for key in option_list:
+        print(key, ": ", option_list[key]["text"], sep="")
     print("---------")
 
 
@@ -30,7 +30,7 @@ if __name__ == "__main__":
                     "7": {"function": vernam_decrypt_int, "text": "Vernam decrypt"},
                     "8": {"function": picture_encrypt_int, "text": "Encrypt message in picture"},
                     "9": {"function": picture_decrypt_int, "text": "Decrypt message from picture"}}
-    hello()
+    welcome_function()
     keepWorking = True
     while keepWorking:
         menuSelection = ""

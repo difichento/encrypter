@@ -1,8 +1,22 @@
-from global_var import alphabet_lower
-from global_var import alphabet_upper
-from tkinter import filedialog, Label, Button, IntVar, Radiobutton, Spinbox
+from tkinter import Button, filedialog, IntVar, Label, Radiobutton, Spinbox
 from tkinter import messagebox
+
+from global_var import alphabet_lower, alphabet_lower_ru, alphabet_upper, alphabet_upper_ru, alph_len, alph_len_ru
+
 from window import caes
+
+
+def find_letter(letter):
+    """
+    Получает на вход букву, ищет ее в алфавитах, если нашла - возвращает список с ее порядковым номером и алфавитом
+    если буква не нашлась, возвращает -1
+    """
+    alphs = [alphabet_upper_ru, alphabet_lower_ru, alphabet_upper, alphabet_lower]
+    for alph in alphs:
+        n = alph.find(letter)
+        if n != -1:
+            return [n, alph]
+    return -1
 
 
 def encrypt_caes_line(line, shift):
@@ -13,20 +27,12 @@ def encrypt_caes_line(line, shift):
     :return: Зашифрованная строка
     """
     result = ""
-    for let in line:
-        find_res = alphabet_lower.find(let)
+    for letter in line:
+        find_res = find_letter(letter)
         if find_res != -1:
-            find_res += shift
-            find_res %= len(alphabet_upper)
-            result += alphabet_lower[find_res]
+            result += find_res[1][(find_res[0] + shift) % len(find_res[1])]
         else:
-            find_res = alphabet_upper.find(let)
-            if find_res != -1:
-                find_res += shift
-                find_res %= len(alphabet_upper)
-                result += alphabet_upper[find_res]
-            else:
-                result += let
+            result += letter
     return result
 
 
@@ -38,18 +44,16 @@ def caesar_encrypt(source_file_way, result_file_way, shift):
     :param shift: Сдвиг
     :return: Ничего не возвращает, но записывает зашифрованный текст в result_file
     """
+    print(source_file_way, result_file_way, shift)
     result = ""
-    source_file = open(source_file_way, "r")
-
-    # encrypting file
-    for line in source_file.readlines():
-        result += encrypt_caes_line(line, shift)
-    source_file.close()
+    with open(source_file_way, "r") as source_file:
+        # encrypting file
+        for line in source_file.readlines():
+            result += encrypt_caes_line(line, shift)
 
     # writing result
-    result_file = open(result_file_way, "w")
-    result_file.write(result)
-    result_file.close()
+    with open(result_file_way, "w") as result_file:
+        result_file.write(result)
 
 
 def caesar_encrypt_int():
@@ -72,20 +76,12 @@ def decrypt_caes_line(line, shift):
     """
 
     result = ""
-    for let in line:
-        find_res = alphabet_lower.find(let)
+    for letter in line:
+        find_res = find_letter(letter)
         if find_res != -1:
-            find_res -= shift
-            find_res %= len(alphabet_upper)
-            result += alphabet_lower[find_res]
+            result += find_res[1][(find_res[0] - shift) % len(find_res[1])]
         else:
-            find_res = alphabet_upper.find(let)
-            if find_res != -1:
-                find_res -= shift
-                find_res %= len(alphabet_upper)
-                result += alphabet_upper[find_res]
-            else:
-                result += let
+            result += letter
     return result
 
 
@@ -98,16 +94,14 @@ def caesar_decrypt(source_file_way, result_file_way, shift):
     :return: Ничего не возвращает, но записывает расшифрованный текст в result_file
     """
     result = ""
-    source_file = open(source_file_way, "r")
-
-    # encrypting file
-    for line in source_file.readlines():
-        result += decrypt_caes_line(line, shift)
-    source_file.close()
+    with open(source_file_way, "r") as source_file:
+        # encrypting file
+        for line in source_file.readlines():
+            result += decrypt_caes_line(line, shift)
 
     # writing result
-    result_file = open(result_file_way, "w")
-    result_file.write(result)
+    with open(result_file_way, "w") as result_file:
+        result_file.write(result)
 
 
 def caesar_decrypt_int():
@@ -128,25 +122,25 @@ def caesar_auto_crack(source_file_way, result_file_way):
     :param result_file_way: Файл куда будет сохранен результат
     :return: Ничего не возвращает, но записывает расшифрованный текст в result_file
     """
-    source_file = open(source_file_way, "r")
-
-    # Подсчет количества букв
-    counter = {}
-    let_sum = 0
-    for let in alphabet_lower:
-        counter[let] = 0
-    for line in source_file.readlines():
-        for let in line.lower():
-            if let in counter.keys():
-                counter[let] += 1
-                let_sum += 1
+    with open(source_file_way, "r") as source_file:
+        # Подсчет количества букв
+        counter = {}
+        letter_sum = 0
+        for letter in alphabet_lower:
+            counter[letter] = 0
+        for line in source_file.readlines():
+            for letter in line.lower():
+                if letter in counter.keys():
+                    counter[letter] += 1
+                    letter_sum += 1
 
     # Находим самую часто входящую букву и считаем что в исходном тексте это была буква "e"
     counter = (list(counter.items()))
     counter.sort(key=lambda i: i[1], reverse=True)
-    counter = list(map(lambda x: [x[0], x[1] / let_sum], counter))
+    counter = list(map(lambda x: [x[0], x[1] / letter_sum], counter))
     shift = alphabet_lower.find(counter[0][0]) - alphabet_lower.find("e")
     if shift < 0:
+        shift = alph_len + shift
         shift = len(alphabet_upper) + shift
 
     caesar_decrypt(source_file_way, result_file_way, shift)
@@ -166,6 +160,7 @@ class Caesar:
     """
     Класс для отрисовки вкладки "Шифр Цезаря" в графическом интерфейсе
     """
+
     def __init__(self):
         self.source_file = None
         self.result_file = None
@@ -203,7 +198,6 @@ class Caesar:
                 messagebox.showinfo('Ура!', 'Файл успешно расшифрован')
 
     def start_analys(self):
-        sel = self.selected_type.get()
         if self.source_file is None:
             messagebox.showinfo('Ошибка', 'Не выбран исходный файл')
         elif self.result_file is None:
@@ -214,14 +208,14 @@ class Caesar:
 
     def show(self):
         description = Label(caes, text="Шифр Цезаря осуществляется фикированным сдвигом текста\n"
-                                            " по алфавиту.", padx=0, pady=20)
+                                       " по алфавиту.", padx=0, pady=20)
         description.grid(column=0, row=0)
 
         choose_file = Button(caes, text="Выберите файл который хотите зашифровать/расшифровать",
-                                  command=self.select_source)
+                             command=self.select_source)
         choose_file.grid(column=0, row=1)
         choose_file = Button(caes, text="Выберите куда сохранить результат",
-                                  command=self.select_result)
+                             command=self.select_result)
         choose_file.grid(column=0, row=2)
 
         self.selected_type = IntVar()
